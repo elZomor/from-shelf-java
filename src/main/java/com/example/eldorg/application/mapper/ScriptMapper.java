@@ -7,7 +7,7 @@ import org.mapstruct.Mapper;
 
 @Mapper(componentModel = "spring")
 public interface ScriptMapper {
-  ScriptDTO toDto(Script script);
+  ScriptDTO scriptToDto(Script script);
 
-  List<ScriptDTO> toDtoList(List<Script> scripts);
+  List<ScriptDTO> scriptListToDtoList(List<Script> scripts);
 }

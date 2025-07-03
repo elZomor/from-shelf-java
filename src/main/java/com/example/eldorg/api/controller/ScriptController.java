@@ -1,11 +1,14 @@
 package com.example.eldorg.api.controller;
 
+import static com.example.eldorg.api.common.RestResponse.successfulResponse;
+
+import com.example.eldorg.api.common.RestResponse;
 import com.example.eldorg.application.dto.ScriptDTO;
 import com.example.eldorg.application.mapper.ScriptMapper;
-import com.example.eldorg.domain.model.Script;
 import com.example.eldorg.domain.model.ScriptStatus;
 import com.example.eldorg.domain.service.ScriptService;
 import java.util.List;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -22,9 +25,9 @@ public class ScriptController {
   }
 
   @GetMapping
-  public List<Script> getAllScripts() {
+  public ResponseEntity<RestResponse<List<ScriptDTO>>> getAllScripts() {
     List<ScriptDTO> scriptDTOS =
-        scriptMapper.toDtoList(scriptService.getScriptsWithStatus(ScriptStatus.APPROVED));
-    return scriptService.getScriptsWithStatus(ScriptStatus.APPROVED);
+        scriptMapper.scriptListToDtoList(scriptService.getScriptsWithStatus(ScriptStatus.APPROVED));
+    return successfulResponse(scriptDTOS);
   }
 }

@@ -19,6 +19,6 @@ public class ScriptService {
   }
 
   public List<Script> getScriptsWithStatus(ScriptStatus status) {
-    return scriptRepo.findByStatus(status);
+    return scriptRepo.findByStatus(status.name());
   }
 }
