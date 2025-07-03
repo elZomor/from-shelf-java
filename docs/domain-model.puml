@@ -1,0 +1,48 @@
+@startuml
+' User Status Enum
+enum UserStatus {
+  ACTIVE
+  INACTIVE
+  BANNED
+}
+
+' User Role Enum
+enum UserRole {
+  USER
+  ADMIN
+}
+
+' Script Status Enum
+enum ScriptStatus {
+  PENDING
+  APPROVED
+  REJECTED
+}
+
+class User {
+  +Long id
+  +String username
+  +String email
+  +String password
+  +UserRole role
+  +UserStatus status
+  +Timestamp createdAt
+  +Timestamp updatedAt
+}
+
+class Script {
+  +Long id
+  +String title
+  +String description
+  +String fileUrl
+  +Boolean downloadable
+  +ScriptStatus status
+  +String rejectionReason
+  +Timestamp createdAt
+  +Timestamp updatedAt
+  +Long userId
+}
+
+User "1" -- "0..*" Script : owns >
+
+@enduml
