@@ -22,12 +22,14 @@ jobs:
       - name: Grant execute permission for Gradle wrapper
         run: chmod +x ./gradlew
 
+      - name: Load env variables from .env.example
+        uses: falti/dotenv-action@v1.0.4
+        with:
+          path: .env.example
+
       - name: Build and run unit tests
         run: ./gradlew clean test --no-daemon
-
-      - name: Upload test results (optional)
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: test-results
-          path: build/test-results/test/
+        env:
+          SPRING_DATASOURCE_URL: url
+          SPRING_DATASOURCE_USERNAME: user
+          SPRING_DATASOURCE_PASSWORD: pass

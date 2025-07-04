@@ -36,6 +36,16 @@ clear separation of concerns.
 - Java 17+
 - Gradle (or use the included wrapper)
 
+### 0. Prepare Environment Variables
+
+Copy the example environment file and edit as needed:
+
+```
+cp .env.example .env
+```
+
+This file is used by Docker Compose and can also be referenced in your local development setup.
+
 ### 1. Start the Database Only
 
 To run only the database (PostgreSQL) for local development or testing:
