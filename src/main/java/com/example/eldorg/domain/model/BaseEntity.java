@@ -1,13 +1,21 @@
 package com.example.eldorg.domain.model;
 
-import jakarta.persistence.Id;
-import jakarta.persistence.MappedSuperclass;
+import jakarta.persistence.*;
 import java.sql.Timestamp;
+import lombok.Getter;
+import lombok.Setter;
 
 @MappedSuperclass
+@Getter
 public class BaseEntity {
-  @Id private Long id;
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  private Long id;
 
+  @Column(insertable = false)
   private Timestamp createdAt;
+
+  @Column(insertable = false)
+  @Setter
   private Timestamp updatedAt;
 }

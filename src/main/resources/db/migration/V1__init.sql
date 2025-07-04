@@ -24,3 +24,15 @@ CREATE TABLE scripts
     updated_at       TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
     CONSTRAINT fk_user FOREIGN KEY (user_id) REFERENCES users (id) ON DELETE CASCADE
 );
+
+CREATE TABLE refresh_tokens
+(
+    id         SERIAL PRIMARY KEY,
+    token      VARCHAR(512) NOT NULL UNIQUE,
+    user_id    BIGINT       NOT NULL,
+    revoked    BOOLEAN               DEFAULT FALSE,
+    created_at TIMESTAMP    NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP    NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    expires_at TIMESTAMP    NOT NULL,
+    CONSTRAINT fk_user_refresh FOREIGN KEY (user_id) REFERENCES users (id) ON DELETE CASCADE
+);

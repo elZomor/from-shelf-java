@@ -1,94 +1,131 @@
-# Eldorg Project
+# Eldorg Spring Boot MVP
 
 ## Overview
 
-Eldorg is a Java Spring Boot application following Clean Architecture principles. The project is structured for
-maintainability, testability, and scalability, with clear separation of concerns across domain, application, API, and
-infrastructure layers.
+Eldorg is a modular Spring Boot MVP project following Clean Architecture principles. It provides a robust foundation for
+scalable, maintainable, and testable Java backend services, featuring JWT authentication, PostgreSQL persistence, and a
+clear separation of concerns.
+
+## Features
+
+- User registration and login with JWT authentication
+- Secure endpoints with role-based access
+- Refresh token and logout support
+- PostgreSQL database with Flyway migrations
+- Clean Architecture: domain, application, infrastructure, config
+- Code quality enforced with Spotless and Checkstyle
+- Docker Compose for local development
+- API documentation via Swagger/OpenAPI
+
+## Tech Stack
+
+- Java 17+
+- Spring Boot 3+
+- Spring Security (JWT)
+- PostgreSQL
+- Flyway
+- MapStruct
+- Gradle
+- Docker Compose
+
+## How to Run Locally
+
+### Prerequisites
+
+- Docker & Docker Compose
+- Java 17+
+- Gradle (or use the included wrapper)
+
+### 1. Start the Database Only
+
+To run only the database (PostgreSQL) for local development or testing:
+
+```
+docker compose up postgres -d
+```
+
+This will start a PostgreSQL instance with a persistent volume and run the `init-db.sql` script.
+
+### 2. Start the Full Stack (App + Database)
+
+To run both the Spring Boot app and the database using Docker Compose:
+
+```
+docker compose up --build
+```
+
+### 3. Run the Application via Gradle or IntelliJ
+
+- You can run the app using Gradle:
+
+  ```
+  ./gradlew bootRun
+  ```
+
+- Or use the provided IntelliJ run configuration (.run/EldorgApplication.run.xml) which sets the required environment
+  variables for you.
+
+## GitHub Workflow (CI)
+
+This project includes a GitHub Actions workflow that runs all unit tests on every push and pull request to main/master.
+The workflow will fail if any test fails, and will pass only if all tests succeed.
+
+Workflow file: `.github/workflows/unit-tests.yml`
+
+Key steps:
+
+- Checks out the code
+- Sets up JDK 21
+- Runs all unit tests with Gradle
+- Uploads test results as an artifact
+
+You can view the workflow status and logs in the GitHub Actions tab of your repository.
+
+## API Documentation
+
+All API endpoints are documented and testable via Swagger UI. You do not need to rely on static API examples—simply use
+the interactive documentation provided.
+
+You can access Swagger UI at:
+
+[http://localhost:8080/api/v1/swagger-ui.html](http://localhost:8080/api/v1/swagger-ui.html)
+
+This interface allows you to explore, test, and understand all available endpoints, request/response formats, and
+authentication requirements in real time.
 
 ## Project Structure
 
-- `config/` — Application configuration classes
-- `domain/` — Business logic, models, repositories, and services
-- `application/` — Use cases and DTOs
-- `api/` — REST controllers
-- `infrastructure/` — Persistence and security implementations
-- `docs/` — Documentation and diagrams
-
-## Prerequisites
-
-- Java 21+
-- Gradle 8+
-- Docker & Docker Compose
-
-## Database Setup
-
-The project uses PostgreSQL as its database. The recommended way to run the database is via Docker Compose, which
-ensures a consistent and isolated environment.
-
-### 1. Start PostgreSQL with Docker Compose
-
-Run the following command in the project root:
-
 ```
-docker-compose up -d
+eldorg/
+├── src/main/java/com/example/eldorg/
+│   ├── api/           # Controllers (entrypoints)
+│   ├── application/   # Use cases, DTOs
+│   ├── config/        # App configuration
+│   ├── domain/        # Models, repositories, services (business logic)
+│   └── infrastructure/# Persistence, security, adapters
+├── src/main/resources/
+│   ├── application.yml
+│   └── db/migration/  # Flyway migrations
+├── docs/              # Architecture & feature docs
+├── docker-compose.yml
+├── init-db.sql
+├── Makefile
+├── README.md
+└── .env.example
 ```
 
-This will:
+## Contribution Guide
 
-- Start a PostgreSQL container
-- Mount a persistent volume for data
-- Run the `init-db.sql` script to initialize the database if it does not exist
+See [docs/contributing.md](docs/contributing.md) for guidelines.
 
-### 2. Database Initialization
+## API Documentation
 
-The `init-db.sql` script is automatically executed by Docker Compose on first run. It:
+All API endpoints are documented and testable via Swagger UI. You do not need to rely on static API examples—simply use
+the interactive documentation provided.
 
-- Creates the database if it does not exist
-- Sets the owner role
+You can access Swagger UI at:
 
-You can find and modify this script at the project root: `init-db.sql`.
+[http://localhost:8080/api/v1/swagger-ui.html](http://localhost:8080/api/v1/swagger-ui.html)
 
-### 3. Database Credentials
-
-The credentials and database name are defined in both `docker-compose.yml` and referenced in the Spring Boot
-`application.yml` file. Make sure these match if you change them.
-
-- **Database:** `eldorg_db`
-- **User:** `eldorg_user`
-- **Password:** `eldorg_pass`
-
-## Running the Application
-
-1. Ensure the database is running (see above).
-2. Build and run the Spring Boot application:
-
-```
-./gradlew bootRun
-```
-
-## Code Quality
-
-- **Spotless** is used for code formatting (Google Java Format)
-- **Checkstyle** is used for linting (Google Java Style Guide)
-
-You can use the provided Makefile for common tasks:
-
-- `make format` — Format code
-- `make lint` — Run Checkstyle
-- `make checkall` — Run both
-
-## Documentation
-
-- All documentation and diagrams are in the `docs/` directory.
-- The domain model is described in `domain-model.puml` (PlantUML format).
-
-## Clean Architecture
-
-The project is organized according to Clean Architecture principles. See the `docs/` directory for diagrams and further
-explanation.
-
-## Contact
-
-For questions or contributions, please refer to the documentation or open an issue.
-
+This interface allows you to explore, test, and understand all available endpoints, request/response formats, and
+authentication requirements in real time.

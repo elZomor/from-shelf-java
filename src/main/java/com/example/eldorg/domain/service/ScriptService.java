@@ -1,5 +1,7 @@
 package com.example.eldorg.domain.service;
 
+import static com.example.eldorg.infrastructure.common.RestResponse.resourceNotFoundExceptionResponse;
+
 import com.example.eldorg.domain.model.Script;
 import com.example.eldorg.domain.model.ScriptStatus;
 import com.example.eldorg.domain.repo.ScriptRepo;
@@ -18,7 +20,13 @@ public class ScriptService {
     // Logic to create a script
   }
 
-  public List<Script> getScriptsWithStatus(ScriptStatus status) {
+  public List<Script> getScriptsByStatus(ScriptStatus status) {
     return scriptRepo.findByStatus(status.name());
+  }
+
+  public Script getScriptByIdAndStatus(Long id, ScriptStatus status) {
+    return scriptRepo
+        .findByIdAndStatus(id, status.name())
+        .orElseThrow(resourceNotFoundExceptionResponse("Script does not exist"));
   }
 }

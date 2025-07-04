@@ -1,0 +1,22 @@
+<component name="ProjectRunConfigurationManager">
+    <configuration default="false" name="EldorgApplication" type="SpringBootApplicationConfigurationType"
+                   factoryName="Spring Boot" nameIsGenerated="true">
+        <envs>
+            <env name="SPRING_DATASOURCE_URL" value="jdbc:postgresql://localhost:5432/eldorg_db"/>
+            <env name="SPRING_DATASOURCE_USERNAME" value="eldorg_user"/>
+            <env name="SPRING_DATASOURCE_PASSWORD" value="eldorg_pass"/>
+        </envs>
+        <option name="FRAME_DEACTIVATION_UPDATE_POLICY" value="UpdateClassesAndResources"/>
+        <module name="eldorg.main"/>
+        <option name="SPRING_BOOT_MAIN_CLASS" value="com.example.eldorg.EldorgApplication"/>
+        <extension name="coverage">
+            <pattern>
+                <option name="PATTERN" value="com.example.eldorg.*"/>
+                <option name="ENABLED" value="true"/>
+            </pattern>
+        </extension>
+        <method v="2">
+            <option name="Make" enabled="true"/>
+        </method>
+    </configuration>
+</component>
